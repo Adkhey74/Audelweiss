@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "product_colors",
+  "info": {
+    "singularName": "product-color",
+    "pluralName": "product-colors",
+    "displayName": "Product_Color",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "isSecondary": {
+      "type": "boolean"
+    },
+    "additionalCost": {
+      "type": "decimal"
+    },
+    "colors": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::color.color",
+      "inversedBy": "product_colors"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product.product",
+      "inversedBy": "product_colors"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "creations",
+  "info": {
+    "singularName": "creation",
+    "pluralName": "creations",
+    "displayName": "Creation",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "shortDescription": {
+      "type": "richtext"
+    },
+    "longDescription": {
+      "type": "richtext"
+    },
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "realisationDuration": {
+      "type": "decimal"
+    },
+    "slug": {
+      "type": "string"
+    }
+  }
+}

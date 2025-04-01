@@ -21,23 +21,52 @@
       "type": "richtext"
     },
     "price": {
-      "type": "decimal"
+      "type": "decimal",
+      "unique": true
     },
     "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
     "product_colors": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::product-color.product-color",
       "mappedBy": "products"
+    },
+    "product_categories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product-category.product-category",
+      "mappedBy": "products"
+    },
+    "product_options": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product-option.product-option",
+      "mappedBy": "products"
+    },
+    "product_informations": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product-information.product-information",
+      "mappedBy": "products"
+    },
+    "reviews": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::review.review",
+      "mappedBy": "product"
+    },
+    "slug": {
+      "type": "string"
     }
   }
 }

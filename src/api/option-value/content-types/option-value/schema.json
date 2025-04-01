@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "option_values",
+  "info": {
+    "singularName": "option-value",
+    "pluralName": "option-values",
+    "displayName": "Option_Value"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "option": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::option.option",
+      "inversedBy": "option_values"
+    },
+    "value": {
+      "type": "string"
+    }
+  }
+}

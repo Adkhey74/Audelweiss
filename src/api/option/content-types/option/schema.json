@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "options",
+  "info": {
+    "singularName": "option",
+    "pluralName": "options",
+    "displayName": "Option",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "isUnique": {
+      "type": "boolean"
+    },
+    "option_values": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::option-value.option-value",
+      "mappedBy": "option"
+    },
+    "product_options": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product-option.product-option",
+      "mappedBy": "options"
+    }
+  }
+}

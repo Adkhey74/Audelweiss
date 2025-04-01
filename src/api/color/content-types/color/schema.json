@@ -4,23 +4,38 @@
   "info": {
     "singularName": "color",
     "pluralName": "colors",
-    "displayName": "Color"
+    "displayName": "Color",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "attributes": {
     "label": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "unique": true
     },
     "color": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "unique": true
     },
     "product_colors": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::product-color.product-color",
       "mappedBy": "colors"
+    },
+    "image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

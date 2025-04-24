@@ -21,21 +21,16 @@
       "required": true,
       "unique": true
     },
-    "product_colors": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::product-color.product-color",
-      "mappedBy": "colors"
-    },
     "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     }
   }
 }

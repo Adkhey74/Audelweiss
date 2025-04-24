@@ -23,10 +23,10 @@
         "creation"
       ]
     },
-    "product_categories": {
+    "products": {
       "type": "relation",
       "relation": "manyToMany",
-      "target": "api::product-category.product-category",
+      "target": "api::product.product",
       "mappedBy": "categories"
     }
   }

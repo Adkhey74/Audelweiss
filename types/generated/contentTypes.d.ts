@@ -393,6 +393,7 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     longDescription: Schema.Attribute.RichText;
     publishedAt: Schema.Attribute.DateTime;
+    reviews: Schema.Attribute.Relation<'oneToMany', 'api::review.review'>;
     shortDescription: Schema.Attribute.RichText;
     slug: Schema.Attribute.String;
     tag: Schema.Attribute.Relation<'manyToOne', 'api::tag.tag'>;
@@ -773,6 +774,7 @@ export interface ApiReviewReview extends Struct.CollectionTypeSchema {
         },
         number
       >;
+    img: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',

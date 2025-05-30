@@ -30,6 +30,16 @@
       "relation": "manyToOne",
       "target": "api::product.product",
       "inversedBy": "reviews"
+    },
+    "img": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

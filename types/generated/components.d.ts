@@ -1,42 +1,99 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
-export interface FooterFooterMain extends Struct.ComponentSchema {
-  collectionName: 'components_footer_footer_mains';
+export interface HeaderNavItem extends Struct.ComponentSchema {
+  collectionName: 'components_header_nav_items';
   info: {
-    description: '';
-    displayName: 'Footer_main';
+    displayName: 'nav_item';
+  };
+  attributes: {
+    label: Schema.Attribute.String;
+    url: Schema.Attribute.String;
+  };
+}
+
+export interface HomeAboutCreator extends Struct.ComponentSchema {
+  collectionName: 'components_home_about_creators';
+  info: {
+    displayName: 'AboutCreator';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText;
+    image: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    Title: Schema.Attribute.String;
+  };
+}
+
+export interface HomeArgumentsBlocks extends Struct.ComponentSchema {
+  collectionName: 'components_home_arguments_blocks';
+  info: {
+    displayName: 'ArgumentsBlocks';
+  };
+  attributes: {
+    Arguments: Schema.Attribute.Component<'home.second-section-block', true>;
+  };
+}
+
+export interface HomeBlogsBlock extends Struct.ComponentSchema {
+  collectionName: 'components_home_blogs_blocks';
+  info: {
+    displayName: 'BlogsBlock';
+  };
+  attributes: {
+    articles: Schema.Attribute.Relation<'oneToMany', 'api::article.article'>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface HomeCategoryBlock extends Struct.ComponentSchema {
+  collectionName: 'components_home_category_blocks';
+  info: {
+    displayName: 'CategoryBlock';
+  };
+  attributes: {
+    categories: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::category.category'
+    >;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface HomeHeroSection extends Struct.ComponentSchema {
+  collectionName: 'components_home_hero_sections';
+  info: {
+    displayName: 'HeroSection';
   };
   attributes: {
     description: Schema.Attribute.Text;
-    img: Schema.Attribute.Media<'images'>;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    Title: Schema.Attribute.String;
   };
 }
 
-export interface FooterFooterNavItem extends Struct.ComponentSchema {
-  collectionName: 'components_footer_footer_nav_items';
+export interface HomeProductsBlock extends Struct.ComponentSchema {
+  collectionName: 'components_home_products_blocks';
   info: {
-    description: '';
-    displayName: 'Footer_nav_item';
+    displayName: 'ProductsBlock';
   };
   attributes: {
-    category: Schema.Attribute.String;
-    links: Schema.Attribute.Component<'nav.nav-item', true>;
+    products: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
+    title: Schema.Attribute.String;
   };
 }
 
-export interface HeaderNavItemWithSublinks extends Struct.ComponentSchema {
-  collectionName: 'components_header_nav_item_with_sublinks';
+export interface HomeSecondSectionBlock extends Struct.ComponentSchema {
+  collectionName: 'components_home_second_section_blocks';
   info: {
     description: '';
-    displayName: 'Nav_item_with_sublinks';
+    displayName: 'ArgumentsItem';
+    icon: 'apps';
   };
   attributes: {
-    img: Schema.Attribute.Media<'images'>;
-    label: Schema.Attribute.String & Schema.Attribute.Required;
-    sublinks: Schema.Attribute.Component<'nav.nav-item', true>;
-    url: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
+    Content: Schema.Attribute.RichText;
+    Title: Schema.Attribute.String;
   };
 }
 
@@ -51,31 +108,6 @@ export interface NavNavItem extends Struct.ComponentSchema {
     url: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
-  };
-}
-
-export interface HomeHeroAttribut extends Struct.ComponentSchema {
-  collectionName: 'components_home_hero_attributs';
-  info: {
-    description: '';
-    displayName: 'Hero attribut';
-    icon: 'apps';
-  };
-  attributes: {
-    Texte: Schema.Attribute.String;
-  };
-}
-
-export interface HomeSecondSectionBlock extends Struct.ComponentSchema {
-  collectionName: 'components_home_second_section_blocks';
-  info: {
-    description: '';
-    displayName: 'Second section block';
-    icon: 'apps';
-  };
-  attributes: {
-    Content: Schema.Attribute.RichText;
-    Title: Schema.Attribute.String;
   };
 }
 
@@ -128,12 +160,15 @@ export interface ProductSizeVariant extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
-      'footer.footer-main': FooterFooterMain;
-      'footer.footer-nav-item': FooterFooterNavItem;
-      'header.nav-item-with-sublinks': HeaderNavItemWithSublinks;
-      'nav.nav-item': NavNavItem;
-      'home.hero-attribut': HomeHeroAttribut;
+      'header.nav-item': HeaderNavItem;
+      'home.about-creator': HomeAboutCreator;
+      'home.arguments-blocks': HomeArgumentsBlocks;
+      'home.blogs-block': HomeBlogsBlock;
+      'home.category-block': HomeCategoryBlock;
+      'home.hero-section': HomeHeroSection;
+      'home.products-block': HomeProductsBlock;
       'home.second-section-block': HomeSecondSectionBlock;
+      'nav.nav-item': NavNavItem;
       'product.color-variant': ProductColorVariant;
       'product.informations': ProductInformations;
       'product.pompon-variant': ProductPomponVariant;

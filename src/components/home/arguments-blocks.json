@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_home_arguments_blocks",
+  "info": {
+    "displayName": "ArgumentsBlocks"
+  },
+  "options": {},
+  "attributes": {
+    "Arguments": {
+      "type": "component",
+      "repeatable": true,
+      "component": "home.second-section-block"
+    }
+  }
+}

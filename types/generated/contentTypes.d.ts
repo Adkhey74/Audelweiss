@@ -424,7 +424,6 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     longDescription: Schema.Attribute.RichText;
     publishedAt: Schema.Attribute.DateTime;
-    reviews: Schema.Attribute.Relation<'oneToMany', 'api::review.review'>;
     shortDescription: Schema.Attribute.RichText;
     slug: Schema.Attribute.String;
     tag: Schema.Attribute.Relation<'manyToOne', 'api::tag.tag'>;
@@ -460,10 +459,6 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
     products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
-    product_categories: Schema.Attribute.Relation<
-      'manyToMany',
-      'api::product-category.product-category'
-    >;
     publishedAt: Schema.Attribute.DateTime;
     type: Schema.Attribute.Enumeration<['product', 'creation']>;
     updatedAt: Schema.Attribute.DateTime;
@@ -497,42 +492,7 @@ export interface ApiColorColor extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::color.color'> &
       Schema.Attribute.Private;
-    product_colors: Schema.Attribute.Relation<
-      'manyToMany',
-      'api::product-color.product-color'
-    >;
     publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiFooterFooter extends Struct.SingleTypeSchema {
-  collectionName: 'footers';
-  info: {
-    description: '';
-    displayName: 'Footer';
-    pluralName: 'footers';
-    singularName: 'footer';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    footer_main: Schema.Attribute.Component<'footer.footer-main', false>;
-    links_category: Schema.Attribute.Component<'footer.footer-nav-item', true>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::footer.footer'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    social_network_links: Schema.Attribute.Component<'nav.nav-item', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -570,6 +530,37 @@ export interface ApiCreationCreation extends Struct.CollectionTypeSchema {
     realisationDuration: Schema.Attribute.Decimal;
     shortDescription: Schema.Attribute.RichText;
     slug: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiFooterFooter extends Struct.SingleTypeSchema {
+  collectionName: 'footers';
+  info: {
+    description: '';
+    displayName: 'Footer';
+    pluralName: 'footers';
+    singularName: 'footer';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    footer_main: Schema.Attribute.Component<'footer.footer-main', false>;
+    links_category: Schema.Attribute.Component<'footer.footer-nav-item', true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::footer.footer'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    social_network_links: Schema.Attribute.Component<'nav.nav-item', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -619,31 +610,21 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    aboutContent: Schema.Attribute.RichText;
-    aboutImage: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios'
-    >;
-    aboutTitle: Schema.Attribute.String;
-    Block: Schema.Attribute.Component<'home.second-section-block', true>;
-    categories: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::category.category'
-    >;
+    About: Schema.Attribute.Component<'home.about-creator', false>;
+    Arguments: Schema.Attribute.Component<'home.arguments-blocks', false>;
+    Blogs: Schema.Attribute.Component<'home.blogs-block', false>;
+    Categories: Schema.Attribute.Component<'home.category-block', false>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    creations: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
-    HeroAttribut: Schema.Attribute.Component<'home.hero-attribut', true>;
-    heroDescription: Schema.Attribute.Text;
-    heroImage: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    heroTitle: Schema.Attribute.String & Schema.Attribute.Required;
+    HeroSection: Schema.Attribute.Component<'home.hero-section', false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::home-page.home-page'
     > &
       Schema.Attribute.Private;
-    products: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
+    Produits: Schema.Attribute.Component<'home.products-block', false>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -754,72 +735,6 @@ export interface ApiOptionOption extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiProductCategoryProductCategory
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'product_categories';
-  info: {
-    displayName: 'Product_Category';
-    pluralName: 'product-categories';
-    singularName: 'product-category';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    categories: Schema.Attribute.Relation<
-      'manyToMany',
-      'api::category.category'
-    >;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::product-category.product-category'
-    > &
-      Schema.Attribute.Private;
-    products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiProductColorProductColor
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'product_colors';
-  info: {
-    description: '';
-    displayName: 'Product_Color';
-    pluralName: 'product-colors';
-    singularName: 'product-color';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    additionalCost: Schema.Attribute.Decimal;
-    colors: Schema.Attribute.Relation<'manyToMany', 'api::color.color'>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    isSecondary: Schema.Attribute.Boolean;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::product-color.product-color'
-    > &
-      Schema.Attribute.Private;
-    products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiProductInformationProductInformation
   extends Struct.CollectionTypeSchema {
   collectionName: 'product_informations';
@@ -845,7 +760,6 @@ export interface ApiProductInformationProductInformation
       'api::product-information.product-information'
     > &
       Schema.Attribute.Private;
-    products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1514,8 +1428,8 @@ declare module '@strapi/strapi' {
       'api::article.article': ApiArticleArticle;
       'api::category.category': ApiCategoryCategory;
       'api::color.color': ApiColorColor;
-      'api::footer.footer': ApiFooterFooter;
       'api::creation.creation': ApiCreationCreation;
+      'api::footer.footer': ApiFooterFooter;
       'api::header.header': ApiHeaderHeader;
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::information.information': ApiInformationInformation;

@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_home_products_blocks",
+  "info": {
+    "displayName": "ProductsBlock"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product.product"
+    }
+  }
+}

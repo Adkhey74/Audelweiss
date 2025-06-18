@@ -1,0 +1,21 @@
+{
+  "kind": "singleType",
+  "collectionName": "article_titles",
+  "info": {
+    "singularName": "article-title",
+    "pluralName": "article-titles",
+    "displayName": "ArticleComponent",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "ArticleTitle": {
+      "type": "string"
+    },
+    "ArticleSubTitle": {
+      "type": "string"
+    }
+  }
+}

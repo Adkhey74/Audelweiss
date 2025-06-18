@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_footer_footer_nav_items",
+  "info": {
+    "displayName": "Footer_nav_item",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "category": {
+      "type": "string"
+    },
+    "links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "nav.nav-item"
+    }
+  }
+}

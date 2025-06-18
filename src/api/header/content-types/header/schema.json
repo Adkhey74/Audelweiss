@@ -11,20 +11,21 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "nav_item": {
+    "links": {
       "type": "component",
       "repeatable": true,
-      "component": "header.nav-item"
+      "component": "header.nav-item-with-sublinks"
     },
     "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     }
   }
 }

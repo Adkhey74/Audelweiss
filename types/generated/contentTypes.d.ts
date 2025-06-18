@@ -536,6 +536,50 @@ export interface ApiHeaderHeader extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
+  collectionName: 'home_pages';
+  info: {
+    description: '';
+    displayName: 'Home page';
+    pluralName: 'home-pages';
+    singularName: 'home-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    aboutContent: Schema.Attribute.RichText;
+    aboutImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    aboutTitle: Schema.Attribute.String;
+    Block: Schema.Attribute.Component<'home.second-section-block', true>;
+    categories: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::category.category'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    creations: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
+    HeroAttribut: Schema.Attribute.Component<'home.hero-attribut', true>;
+    heroDescription: Schema.Attribute.Text;
+    heroImage: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    heroTitle: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::home-page.home-page'
+    > &
+      Schema.Attribute.Private;
+    products: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiInformationInformation extends Struct.CollectionTypeSchema {
   collectionName: 'informations';
   info: {
@@ -1333,6 +1377,7 @@ declare module '@strapi/strapi' {
       'api::color.color': ApiColorColor;
       'api::creation.creation': ApiCreationCreation;
       'api::header.header': ApiHeaderHeader;
+      'api::home-page.home-page': ApiHomePageHomePage;
       'api::information.information': ApiInformationInformation;
       'api::option-value.option-value': ApiOptionValueOptionValue;
       'api::option.option': ApiOptionOption;

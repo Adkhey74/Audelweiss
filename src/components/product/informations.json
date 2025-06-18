@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_product_informations",
+  "info": {
+    "displayName": "informations"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string"
+    }
+  }
+}

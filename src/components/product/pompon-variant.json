@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_product_pompon_variants",
+  "info": {
+    "displayName": "pompon_variant",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "enabled": {
+      "type": "boolean"
+    },
+    "price": {
+      "type": "decimal"
+    }
+  }
+}

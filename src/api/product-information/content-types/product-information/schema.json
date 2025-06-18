@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "product_informations",
+  "info": {
+    "singularName": "product-information",
+    "pluralName": "product-informations",
+    "displayName": "Product_Information"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "information": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::information.information",
+      "inversedBy": "product_informations"
+    }
+  }
+}

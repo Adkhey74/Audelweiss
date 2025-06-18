@@ -21,23 +21,60 @@
       "type": "richtext"
     },
     "price": {
-      "type": "decimal"
+      "type": "decimal",
+      "unique": false
     },
     "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
-    "product_colors": {
+    "slug": {
+      "type": "string"
+    },
+    "categories": {
       "type": "relation",
       "relation": "manyToMany",
-      "target": "api::product-color.product-color",
-      "mappedBy": "products"
+      "target": "api::category.category",
+      "inversedBy": "products"
+    },
+    "Couleurs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "product.color-variant"
+    },
+    "Taille": {
+      "type": "component",
+      "repeatable": true,
+      "component": "product.size-variant"
+    },
+    "Pompom": {
+      "type": "component",
+      "repeatable": false,
+      "component": "product.pompon-variant"
+    },
+    "Informations": {
+      "type": "component",
+      "repeatable": true,
+      "component": "product.informations"
+    },
+    "Promotion": {
+      "type": "boolean"
+    },
+    "discountPercent": {
+      "type": "decimal"
+    },
+    "reviews": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::review.review",
+      "mappedBy": "product"
     }
   }
 }

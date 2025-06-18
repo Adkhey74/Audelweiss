@@ -11,6 +11,31 @@ export interface HeaderNavItem extends Struct.ComponentSchema {
   };
 }
 
+export interface HomeHeroAttribut extends Struct.ComponentSchema {
+  collectionName: 'components_home_hero_attributs';
+  info: {
+    description: '';
+    displayName: 'Hero attribut';
+    icon: 'apps';
+  };
+  attributes: {
+    Texte: Schema.Attribute.String;
+  };
+}
+
+export interface HomeSecondSectionBlock extends Struct.ComponentSchema {
+  collectionName: 'components_home_second_section_blocks';
+  info: {
+    description: '';
+    displayName: 'Second section block';
+    icon: 'apps';
+  };
+  attributes: {
+    Content: Schema.Attribute.RichText;
+    Title: Schema.Attribute.String;
+  };
+}
+
 export interface ProductColorVariant extends Struct.ComponentSchema {
   collectionName: 'components_product_color_variants';
   info: {
@@ -61,6 +86,8 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'header.nav-item': HeaderNavItem;
+      'home.hero-attribut': HomeHeroAttribut;
+      'home.second-section-block': HomeSecondSectionBlock;
       'product.color-variant': ProductColorVariant;
       'product.informations': ProductInformations;
       'product.pompon-variant': ProductPomponVariant;

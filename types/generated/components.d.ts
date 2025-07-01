@@ -1,13 +1,73 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
-export interface HeaderNavItem extends Struct.ComponentSchema {
-  collectionName: 'components_header_nav_items';
+export interface AboutParcoursProfessionnel extends Struct.ComponentSchema {
+  collectionName: 'components_about_parcours_professionnels';
   info: {
-    displayName: 'nav_item';
+    displayName: 'Parcours professionnel';
   };
   attributes: {
-    label: Schema.Attribute.String;
-    url: Schema.Attribute.String;
+    description: Schema.Attribute.RichText;
+    images: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    titre: Schema.Attribute.String;
+  };
+}
+
+export interface AboutPremiereSection extends Struct.ComponentSchema {
+  collectionName: 'components_about_premiere_sections';
+  info: {
+    description: '';
+    displayName: 'Premi\u00E8re section';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText;
+    images: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    titre: Schema.Attribute.String;
+  };
+}
+
+export interface FooterFooterMain extends Struct.ComponentSchema {
+  collectionName: 'components_footer_footer_mains';
+  info: {
+    description: '';
+    displayName: 'Footer_main';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    img: Schema.Attribute.Media<'images'>;
+  };
+}
+
+export interface FooterFooterNavItem extends Struct.ComponentSchema {
+  collectionName: 'components_footer_footer_nav_items';
+  info: {
+    description: '';
+    displayName: 'Footer_nav_item';
+  };
+  attributes: {
+    category: Schema.Attribute.String;
+    links: Schema.Attribute.Component<'nav.nav-item', true>;
+  };
+}
+
+export interface HeaderNavItemWithSublinks extends Struct.ComponentSchema {
+  collectionName: 'components_header_nav_item_with_sublinks';
+  info: {
+    description: '';
+    displayName: 'Nav_item_with_sublinks';
+  };
+  attributes: {
+    img: Schema.Attribute.Media<'images'>;
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+    sublinks: Schema.Attribute.Component<'nav.nav-item', true>;
+    url: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
   };
 }
 
@@ -157,10 +217,28 @@ export interface ProductSizeVariant extends Struct.ComponentSchema {
   };
 }
 
+export interface ProductSubcategoryAssignment extends Struct.ComponentSchema {
+  collectionName: 'components_product_subcategory_assignments';
+  info: {
+    description: "Association d'un produit \u00E0 une sous-cat\u00E9gorie sp\u00E9cifique";
+    displayName: 'Subcategory Assignment';
+  };
+  attributes: {
+    category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'> &
+      Schema.Attribute.Required;
+    subcategoryName: Schema.Attribute.String & Schema.Attribute.Required;
+    subcategorySlug: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
-      'header.nav-item': HeaderNavItem;
+      'about.parcours-professionnel': AboutParcoursProfessionnel;
+      'about.premiere-section': AboutPremiereSection;
+      'footer.footer-main': FooterFooterMain;
+      'footer.footer-nav-item': FooterFooterNavItem;
+      'header.nav-item-with-sublinks': HeaderNavItemWithSublinks;
       'home.about-creator': HomeAboutCreator;
       'home.arguments-blocks': HomeArgumentsBlocks;
       'home.blogs-block': HomeBlogsBlock;
@@ -173,6 +251,7 @@ declare module '@strapi/strapi' {
       'product.informations': ProductInformations;
       'product.pompon-variant': ProductPomponVariant;
       'product.size-variant': ProductSizeVariant;
+      'product.subcategory-assignment': ProductSubcategoryAssignment;
     }
   }
 }

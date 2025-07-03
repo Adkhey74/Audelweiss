@@ -18,7 +18,7 @@ async function getChildCategoryIds(parentId: number, categoryIds: Set<number>, s
       const addChildrenIds = (children: any[]) => {
         children.forEach(child => {
           if (child.id && !categoryIds.has(child.id)) {
-            console.log(`➕ Adding child category ${child.id} to the set`);
+            console.log(`Adding child category ${child.id} to the set`);
             categoryIds.add(child.id);
             if (child.children && child.children.length > 0) {
               addChildrenIds(child.children);
@@ -131,5 +131,102 @@ export default factories.createCoreController('api::product.product', ({ strapi 
         pagination
       }
     });
+  },
+
+  // Méthode personnalisée pour récupérer les produits suggérés basés sur les catégories
+  async getSuggested(ctx) {
+    try {
+      console.log('🔍 Début de getSuggested avec params:', ctx.params);
+      
+      const { productId } = ctx.params;
+      
+      if (!productId) {
+        console.log('❌ Pas d\'ID de produit fourni');
+        return ctx.badRequest('ID du produit requis');
+      }
+
+      console.log('🎯 Recherche du produit avec ID:', productId);
+
+      // Récupérer le produit actuel avec ses catégories
+      const currentProduct = await strapi.service('api::product.product').findOne(productId, {
+        populate: {
+          categories: {
+            populate: ['children']
+          }
+        }
+      });
+
+      if (!currentProduct) {
+        console.log('❌ Produit non trouvé avec ID:', productId);
+        return ctx.notFound('Produit non trouvé');
+      }
+
+      console.log('✅ Produit trouvé:', currentProduct.title);
+
+      // Collecter toutes les catégories (parent + enfants)
+      const allCategoryIds = new Set<number>();
+      
+      if (currentProduct.categories && currentProduct.categories.length > 0) {
+        console.log('📂 Catégories du produit:', currentProduct.categories.map(c => c.name));
+        
+        for (const category of currentProduct.categories) {
+          allCategoryIds.add(category.id);
+          
+          // Ajouter les catégories enfants récursivement
+          if (category.children && category.children.length > 0) {
+            const addChildrenIds = (children: any[]) => {
+              children.forEach(child => {
+                allCategoryIds.add(child.id);
+                if (child.children && child.children.length > 0) {
+                  addChildrenIds(child.children);
+                }
+              });
+            };
+            addChildrenIds(category.children);
+          }
+        }
+      }
+
+      console.log('🎯 IDs de catégories à rechercher:', Array.from(allCategoryIds));
+
+      // Récupérer les produits suggérés basés sur les catégories communes
+      const suggestedProducts = await strapi.service('api::product.product').find({
+        filters: {
+          publishedAt: {
+            $notNull: true
+          },
+          // Exclure le produit actuel en utilisant son documentId (UUID) au lieu de l'ID numérique
+          documentId: {
+            $ne: productId
+          },
+          categories: {
+            id: {
+              $in: Array.from(allCategoryIds)
+            }
+          }
+        },
+        sort: { createdAt: 'desc' },
+        pagination: {
+          limit: 6
+        },
+        populate: {
+          images: true,
+          categories: true,
+          reviews: true
+        }
+      });
+
+      console.log('✅ Produits suggérés trouvés:', suggestedProducts.results.length);
+
+      return ctx.send({
+        data: suggestedProducts.results,
+        meta: {
+          pagination: suggestedProducts.pagination
+        }
+      });
+    } catch (error) {
+      console.error('❌ Erreur lors de la récupération des produits suggérés:', error);
+      return ctx.badRequest('Erreur lors de la récupération des produits suggérés');
+    }
   }
 }));

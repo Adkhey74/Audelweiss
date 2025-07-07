@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_about_parcours_professionnels",
+  "info": {
+    "displayName": "Parcours professionnel"
+  },
+  "options": {},
+  "attributes": {
+    "titre": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "images": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
+    }
+  }
+}

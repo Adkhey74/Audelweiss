@@ -1,0 +1,32 @@
+{
+  "kind": "singleType",
+  "collectionName": "abouts",
+  "info": {
+    "singularName": "about",
+    "pluralName": "abouts",
+    "displayName": "About"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "firstSection": {
+      "type": "component",
+      "repeatable": false,
+      "component": "about.premiere-section"
+    },
+    "arguments": {
+      "type": "component",
+      "repeatable": false,
+      "component": "home.arguments-blocks"
+    },
+    "citation": {
+      "type": "text"
+    },
+    "lastSection": {
+      "type": "component",
+      "repeatable": false,
+      "component": "about.parcours-professionnel"
+    }
+  }
+}

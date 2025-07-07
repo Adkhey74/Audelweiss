@@ -1,5 +1,36 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface AboutParcoursProfessionnel extends Struct.ComponentSchema {
+  collectionName: 'components_about_parcours_professionnels';
+  info: {
+    displayName: 'Parcours professionnel';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText;
+    images: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    titre: Schema.Attribute.String;
+  };
+}
+
+export interface AboutPremiereSection extends Struct.ComponentSchema {
+  collectionName: 'components_about_premiere_sections';
+  info: {
+    description: '';
+    displayName: 'Premi\u00E8re section';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText;
+    images: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    titre: Schema.Attribute.String;
+  };
+}
+
 export interface FooterFooterMain extends Struct.ComponentSchema {
   collectionName: 'components_footer_footer_mains';
   info: {
@@ -186,9 +217,25 @@ export interface ProductSizeVariant extends Struct.ComponentSchema {
   };
 }
 
+export interface ProductSubcategoryAssignment extends Struct.ComponentSchema {
+  collectionName: 'components_product_subcategory_assignments';
+  info: {
+    description: "Association d'un produit \u00E0 une sous-cat\u00E9gorie sp\u00E9cifique";
+    displayName: 'Subcategory Assignment';
+  };
+  attributes: {
+    category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'> &
+      Schema.Attribute.Required;
+    subcategoryName: Schema.Attribute.String & Schema.Attribute.Required;
+    subcategorySlug: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'about.parcours-professionnel': AboutParcoursProfessionnel;
+      'about.premiere-section': AboutPremiereSection;
       'footer.footer-main': FooterFooterMain;
       'footer.footer-nav-item': FooterFooterNavItem;
       'header.nav-item-with-sublinks': HeaderNavItemWithSublinks;
@@ -204,6 +251,7 @@ declare module '@strapi/strapi' {
       'product.informations': ProductInformations;
       'product.pompon-variant': ProductPomponVariant;
       'product.size-variant': ProductSizeVariant;
+      'product.subcategory-assignment': ProductSubcategoryAssignment;
     }
   }
 }

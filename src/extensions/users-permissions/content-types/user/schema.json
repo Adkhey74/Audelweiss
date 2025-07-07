@@ -85,6 +85,11 @@
       "relation": "oneToMany",
       "target": "api::user-addresse.user-addresse",
       "mappedBy": "user_id"
+    },
+    "isVerified": {
+      "type": "boolean",
+      "default": false,
+      "required": false
     }
   }
 }

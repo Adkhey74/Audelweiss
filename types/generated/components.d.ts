@@ -1,13 +1,42 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
-export interface HeaderNavItem extends Struct.ComponentSchema {
-  collectionName: 'components_header_nav_items';
+export interface FooterFooterMain extends Struct.ComponentSchema {
+  collectionName: 'components_footer_footer_mains';
   info: {
-    displayName: 'nav_item';
+    description: '';
+    displayName: 'Footer_main';
   };
   attributes: {
-    label: Schema.Attribute.String;
-    url: Schema.Attribute.String;
+    description: Schema.Attribute.Text;
+    img: Schema.Attribute.Media<'images'>;
+  };
+}
+
+export interface FooterFooterNavItem extends Struct.ComponentSchema {
+  collectionName: 'components_footer_footer_nav_items';
+  info: {
+    description: '';
+    displayName: 'Footer_nav_item';
+  };
+  attributes: {
+    category: Schema.Attribute.String;
+    links: Schema.Attribute.Component<'nav.nav-item', true>;
+  };
+}
+
+export interface HeaderNavItemWithSublinks extends Struct.ComponentSchema {
+  collectionName: 'components_header_nav_item_with_sublinks';
+  info: {
+    description: '';
+    displayName: 'Nav_item_with_sublinks';
+  };
+  attributes: {
+    img: Schema.Attribute.Media<'images'>;
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+    sublinks: Schema.Attribute.Component<'nav.nav-item', true>;
+    url: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
   };
 }
 
@@ -160,7 +189,9 @@ export interface ProductSizeVariant extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
-      'header.nav-item': HeaderNavItem;
+      'footer.footer-main': FooterFooterMain;
+      'footer.footer-nav-item': FooterFooterNavItem;
+      'header.nav-item-with-sublinks': HeaderNavItemWithSublinks;
       'home.about-creator': HomeAboutCreator;
       'home.arguments-blocks': HomeArgumentsBlocks;
       'home.blogs-block': HomeBlogsBlock;

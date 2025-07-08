@@ -36,6 +36,12 @@
     },
     "slug": {
       "type": "string"
+    },
+    "creation_categories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::creation-category.creation-category",
+      "mappedBy": "creations"
     }
   }
 }

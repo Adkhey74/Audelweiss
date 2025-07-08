@@ -536,6 +536,40 @@ export interface ApiColorColor extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCreationCategoryCreationCategory
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'creation_categories';
+  info: {
+    description: '';
+    displayName: 'CreationCategory';
+    pluralName: 'creation-categories';
+    singularName: 'creation-category';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    creations: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::creation.creation'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::creation-category.creation-category'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiCreationCreation extends Struct.CollectionTypeSchema {
   collectionName: 'creations';
   info: {
@@ -551,6 +585,10 @@ export interface ApiCreationCreation extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    creation_categories: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::creation-category.creation-category'
+    >;
     images: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
       true
@@ -1516,6 +1554,7 @@ declare module '@strapi/strapi' {
       'api::article.article': ApiArticleArticle;
       'api::category.category': ApiCategoryCategory;
       'api::color.color': ApiColorColor;
+      'api::creation-category.creation-category': ApiCreationCategoryCreationCategory;
       'api::creation.creation': ApiCreationCreation;
       'api::footer.footer': ApiFooterFooter;
       'api::header.header': ApiHeaderHeader;

@@ -69,6 +69,7 @@ export default factories.createCoreController('api::product.product', ({ strapi 
     
     // Handle category filtering with parent/child logic
     let categoryIds: string[] = [];
+    let categorySlugs: string[] = [];
     
     // Check for category parameter (new format)
     if (category) {
@@ -83,8 +84,16 @@ export default factories.createCoreController('api::product.product', ({ strapi 
         categoryIds = [...categoryIds, ...existingIds];
         console.log('🔍 Filters categories found:', existingIds);
       }
+      
+      // Check for filters[categories][slug][$in] format (frontend format)
+      if (filtersObj.categories && filtersObj.categories.slug && filtersObj.categories.slug.$in) {
+        const existingSlugs = parseCategoryIds(filtersObj.categories.slug.$in);
+        categorySlugs = [...categorySlugs, ...existingSlugs];
+        console.log('🔍 Filters categories slugs found:', existingSlugs);
+      }
     }
         
+    // Process category IDs
     if (categoryIds.length > 0) {
       // Get all selected categories and their children
       const allCategoryIds = new Set<number>();
@@ -99,14 +108,57 @@ export default factories.createCoreController('api::product.product', ({ strapi 
           await getChildCategoryIds(catId, allCategoryIds, strapi);
         }
       }
-            
-      // Filter by all categories (parent + children)
+      
+      // Add to query filters
       if (allCategoryIds.size > 0) {
         queryFilters.categories = {
           id: {
             $in: Array.from(allCategoryIds)
           }
         };
+      }
+    }
+    
+    // Process category slugs
+    if (categorySlugs.length > 0) {
+      // Get categories by slugs
+      const categoriesBySlug = await strapi.db.query('api::category.category').findMany({
+        where: {
+          slug: {
+            $in: categorySlugs
+          }
+        },
+        populate: {
+          children: {
+            populate: ['children']
+          }
+        }
+      });
+      
+      // Get all category IDs (including children)
+      const allCategoryIds = new Set<number>();
+      
+      for (const category of categoriesBySlug) {
+        console.log(`🎯 Processing category slug: ${category.slug} (ID: ${category.id})`);
+        allCategoryIds.add(category.id);
+        
+        // Get children of this category recursively
+        await getChildCategoryIds(category.id, allCategoryIds, strapi);
+      }
+      
+      // Update query filters
+      if (allCategoryIds.size > 0) {
+        if (queryFilters.categories) {
+          // Merge with existing category filters
+          const existingIds = queryFilters.categories.id.$in || [];
+          queryFilters.categories.id.$in = [...new Set([...existingIds, ...Array.from(allCategoryIds)])];
+        } else {
+          queryFilters.categories = {
+            id: {
+              $in: Array.from(allCategoryIds)
+            }
+          };
+        }
       }
     }
     

@@ -39,9 +39,9 @@
     },
     "creation_categories": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToMany",
       "target": "api::creation-category.creation-category",
-      "mappedBy": "creation"
+      "mappedBy": "creations"
     }
   }
 }

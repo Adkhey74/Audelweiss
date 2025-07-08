@@ -14,9 +14,9 @@
     "name": {
       "type": "string"
     },
-    "creation": {
+    "creations": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
       "target": "api::creation.creation",
       "inversedBy": "creation_categories"
     }

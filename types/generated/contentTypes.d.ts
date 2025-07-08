@@ -552,7 +552,10 @@ export interface ApiCreationCategoryCreationCategory
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    creation: Schema.Attribute.Relation<'manyToOne', 'api::creation.creation'>;
+    creations: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::creation.creation'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -583,7 +586,7 @@ export interface ApiCreationCreation extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     creation_categories: Schema.Attribute.Relation<
-      'oneToMany',
+      'manyToMany',
       'api::creation-category.creation-category'
     >;
     images: Schema.Attribute.Media<

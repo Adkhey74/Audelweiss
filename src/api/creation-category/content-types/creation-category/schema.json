@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "creation_categories",
+  "info": {
+    "singularName": "creation-category",
+    "pluralName": "creation-categories",
+    "displayName": "CreationCategory",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "creation": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::creation.creation",
+      "inversedBy": "creation_categories"
+    }
+  }
+}

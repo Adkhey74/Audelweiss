@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_home_category_blocks",
+  "info": {
+    "displayName": "CategoryBlock"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "categories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::category.category"
+    }
+  }
+}

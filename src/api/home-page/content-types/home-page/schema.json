@@ -11,67 +11,35 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "heroTitle": {
-      "type": "string",
-      "required": true
-    },
-    "heroDescription": {
-      "type": "text"
-    },
-    "heroImage": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
-    "creations": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::product.product"
-    },
-    "aboutTitle": {
-      "type": "string"
-    },
-    "aboutContent": {
-      "type": "richtext"
-    },
-    "aboutImage": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
-    "categories": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::category.category"
-    },
-    "Block": {
-      "displayName": "Second section block",
+    "HeroSection": {
       "type": "component",
-      "repeatable": true,
-      "component": "home.second-section-block"
+      "repeatable": false,
+      "component": "home.hero-section"
     },
-    "products": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::product.product"
-    },
-    "HeroAttribut": {
-      "displayName": "Hero attribut",
+    "Categories": {
       "type": "component",
-      "repeatable": true,
-      "component": "home.hero-attribut"
+      "repeatable": false,
+      "component": "home.category-block"
+    },
+    "Produits": {
+      "type": "component",
+      "repeatable": false,
+      "component": "home.products-block"
+    },
+    "About": {
+      "type": "component",
+      "repeatable": false,
+      "component": "home.about-creator"
+    },
+    "Blogs": {
+      "type": "component",
+      "repeatable": false,
+      "component": "home.blogs-block"
+    },
+    "Arguments": {
+      "type": "component",
+      "repeatable": false,
+      "component": "home.arguments-blocks"
     }
   }
 }

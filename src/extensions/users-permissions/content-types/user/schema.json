@@ -70,6 +70,26 @@
       "relation": "oneToMany",
       "target": "api::review.review",
       "mappedBy": "user"
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "displayName": {
+      "type": "string"
+    },
+    "user_addresses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-addresse.user-addresse",
+      "mappedBy": "user_id"
+    },
+    "isVerified": {
+      "type": "boolean",
+      "default": false,
+      "required": false
     }
   }
 }

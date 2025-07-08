@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_home_blogs_blocks",
+  "info": {
+    "displayName": "BlogsBlock"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "articles": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::article.article"
+    }
+  }
+}

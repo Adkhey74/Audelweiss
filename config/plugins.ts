@@ -13,4 +13,7 @@ module.exports = ({ env }) => ({
       },
     },
   },
+  documentation: {
+    enabled: false,
+  },
 });

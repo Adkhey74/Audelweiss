@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_home_creations",
+  "info": {
+    "displayName": "Creations"
+  },
+  "options": {},
+  "attributes": {
+    "creations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::creation.creation"
+    }
+  }
+}

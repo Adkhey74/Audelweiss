@@ -121,6 +121,16 @@ export interface HomeCategoryBlock extends Struct.ComponentSchema {
   };
 }
 
+export interface HomeCreations extends Struct.ComponentSchema {
+  collectionName: 'components_home_creations';
+  info: {
+    displayName: 'Creations';
+  };
+  attributes: {
+    creations: Schema.Attribute.Relation<'oneToMany', 'api::creation.creation'>;
+  };
+}
+
 export interface HomeHeroSection extends Struct.ComponentSchema {
   collectionName: 'components_home_hero_sections';
   info: {
@@ -243,6 +253,7 @@ declare module '@strapi/strapi' {
       'home.arguments-blocks': HomeArgumentsBlocks;
       'home.blogs-block': HomeBlogsBlock;
       'home.category-block': HomeCategoryBlock;
+      'home.creations': HomeCreations;
       'home.hero-section': HomeHeroSection;
       'home.products-block': HomeProductsBlock;
       'home.second-section-block': HomeSecondSectionBlock;

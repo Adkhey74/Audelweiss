@@ -203,7 +203,25 @@ export default factories.createCoreController('api::product.product', ({ strapi 
       const currentProduct = await strapi.service('api::product.product').findOne(productId, {
         populate: {
           categories: {
-            populate: ['children']
+            populate: {
+              children: {
+                populate: ['children']
+              },
+              parent: {
+                populate: {
+                  children: {
+                    populate: ['children']
+                  },
+                  parent: {
+                    populate: {
+                      children: {
+                        populate: ['children']
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       });
@@ -215,7 +233,7 @@ export default factories.createCoreController('api::product.product', ({ strapi 
 
       console.log('✅ Produit trouvé:', currentProduct.title);
 
-      // Collecter toutes les catégories (parent + enfants)
+      // Collecter toutes les catégories (parent + enfants + parents des catégories)
       const allCategoryIds = new Set<number>();
       
       if (currentProduct.categories && currentProduct.categories.length > 0) {
@@ -236,10 +254,38 @@ export default factories.createCoreController('api::product.product', ({ strapi 
             };
             addChildrenIds(category.children);
           }
+          console.log('🔍 Catégorie parente:', category.parent);
+          
+          // Ajouter les catégories parentes récursivement
+          if (category.parent) {
+            const addParentIds = (parentCategory: any) => {
+              allCategoryIds.add(parentCategory.id);
+              
+              // Ajouter tous les enfants de cette catégorie parente
+              if (parentCategory.children && parentCategory.children.length > 0) {
+                const addAllChildrenIds = (children: any[]) => {
+                  children.forEach(child => {
+                    allCategoryIds.add(child.id);
+                    if (child.children && child.children.length > 0) {
+                      addAllChildrenIds(child.children);
+                    }
+                  });
+                };
+                addAllChildrenIds(parentCategory.children);
+              }
+              
+              if (parentCategory.parent) {
+                addParentIds(parentCategory.parent);
+              }
+            };
+            addParentIds(category.parent);
+          }
         }
       }
 
-      console.log('🎯 IDs de catégories à rechercher:', Array.from(allCategoryIds));
+      console.log('allCategoryIds', allCategoryIds);
+      
+
 
       // Récupérer les produits suggérés basés sur les catégories communes
       const suggestedProducts = await strapi.service('api::product.product').find({
@@ -268,7 +314,6 @@ export default factories.createCoreController('api::product.product', ({ strapi 
         }
       });
 
-      console.log('✅ Produits suggérés trouvés:', suggestedProducts.results.length);
 
       return ctx.send({
         data: suggestedProducts.results,

@@ -40,6 +40,11 @@
       "type": "component",
       "repeatable": false,
       "component": "home.arguments-blocks"
+    },
+    "creations": {
+      "type": "component",
+      "repeatable": false,
+      "component": "home.creations"
     }
   }
 }

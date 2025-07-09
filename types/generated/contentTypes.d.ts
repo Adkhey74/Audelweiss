@@ -1574,10 +1574,6 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 3;
       }>;
-    wishlist_items: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::wishlist-item.wishlist-item'
-    >;
     wishlists: Schema.Attribute.Relation<'oneToMany', 'api::wishlist.wishlist'>;
   };
 }

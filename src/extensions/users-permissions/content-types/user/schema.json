@@ -91,12 +91,6 @@
       "default": false,
       "required": false
     },
-    "wishlist_items": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::wishlist-item.wishlist-item",
-      "mappedBy": "user"
-    },
     "wishlists": {
       "type": "relation",
       "relation": "oneToMany",

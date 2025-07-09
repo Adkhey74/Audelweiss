@@ -462,10 +462,6 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    wishlists: Schema.Attribute.Relation<
-      'manyToMany',
-      'api::wishlist.wishlist'
-    >;
   };
 }
 
@@ -922,6 +918,10 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    wishlists: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::wishlist.wishlist'
+    >;
   };
 }
 
@@ -1039,6 +1039,7 @@ export interface ApiUserAddresseUserAddresse
 export interface ApiWishlistWishlist extends Struct.CollectionTypeSchema {
   collectionName: 'wishlists';
   info: {
+    description: '';
     displayName: 'Wishlist';
     pluralName: 'wishlists';
     singularName: 'wishlist';
@@ -1047,7 +1048,6 @@ export interface ApiWishlistWishlist extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    articles: Schema.Attribute.Relation<'manyToMany', 'api::article.article'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1057,6 +1057,7 @@ export interface ApiWishlistWishlist extends Struct.CollectionTypeSchema {
       'api::wishlist.wishlist'
     > &
       Schema.Attribute.Private;
+    products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

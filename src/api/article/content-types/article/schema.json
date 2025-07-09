@@ -41,12 +41,6 @@
       ],
       "type": "media",
       "multiple": false
-    },
-    "wishlists": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::wishlist.wishlist",
-      "mappedBy": "articles"
     }
   }
 }
